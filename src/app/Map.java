@@ -58,6 +58,7 @@ public class Map {
 
 	public Image getMapImage() throws SlickException {
 		//graphics.setBackground(new Color(0,50,50,255));
+		int avgR = 0, avgG = 0, avgB = 0;
 		graphics.clear();
 		
 		int renderX = 0;
@@ -65,12 +66,24 @@ public class Map {
 		for (int x = visibleXStart; x < visibleXEnd; x++) {
 			renderY = 0;
 			for (int y = visibleYStart; y < visibleYEnd; y++) {
-				graphics.setColor(grid.get(x).get(y).getColor());
+				Tile tile = grid.get(x).get(y);
+				// Apply a random adjustment to the color of every tile, ever render
+				tile.adjustColor();
+				avgR += tile.getColor().getRed();
+				avgG += tile.getColor().getGreen();
+				avgB += tile.getColor().getBlue();
+				graphics.setColor(tile.getColor());
 				graphics.fillRect(renderX * EndlessGame.zoomLevel,  renderY * EndlessGame.zoomLevel,  EndlessGame.zoomLevel,  EndlessGame.zoomLevel);
 				renderY++;
 			}
 			renderX++;
 		}
+		int tileCount = getVisibleTileCount();
+		avgR = avgR / tileCount;
+		avgG = avgG / tileCount;
+		avgB = avgB / tileCount;
+		int avgColor = avgR + avgG + avgB;
+		System.out.println("Average color = " + avgColor);
 		
 		//System.out.println(renderX + "," + renderY);
 		graphics.flush();

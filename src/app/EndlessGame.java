@@ -1,4 +1,5 @@
 package app;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,12 +26,15 @@ public class EndlessGame extends BasicGame
 	private boolean colorChangeRateInFlux = false;
 	boolean zoomLevelInFlux;
 	
+	public static Random random;
+	
 	static int zoomLevel = 20;	
 	static int colorChangeRate = 50;
 	
 	public EndlessGame(String gamename)
 	{
 		super(gamename);
+		random = new Random(System.currentTimeMillis());
 	}
 
 	@Override

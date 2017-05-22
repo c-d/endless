@@ -27,7 +27,7 @@ public class Tile {
 	 * Create a blank (white) tile.
 	 */
 	public Tile() {
-		color = new Color(255,255,255);
+		color = new Color(0,0,0);
 	}
 
 	/**
@@ -70,6 +70,36 @@ public class Tile {
 
 	public Color getColor() {
 		return color;
+	}
+	
+	/**
+	 * Randomly adjust color by minor increments, with no consideration of neighbouring tiles.
+	 */
+	public void adjustColor() {
+		int r1 = EndlessGame.random.nextInt(3);
+		int r2 = EndlessGame.random.nextInt(2) == 0 ? 1 : -1;
+		switch (r1) {
+			case 0: color = getRealColor(color.getRed() + r2, color.getGreen(), color.getBlue()); break;
+			case 1: color = getRealColor(color.getRed(), color.getGreen() + r2, color.getBlue()); break;
+			case 2: color = getRealColor(color.getRed(), color.getGreen(), color.getBlue() + r2); break;
+		}
+	}
+	
+	/**
+	 * Given 3 integers, returns a color within a real range (0-255 RGB)
+	 * @param r
+	 * @param g
+	 * @param b
+	 * @return
+	 */
+	private Color getRealColor(int r, int g, int b) {
+		if (r > 255) r = 255;
+		if (g > 255) g = 255;
+		if (b > 255) b = 255;
+		if (r < 0) r = 0;
+		if (g < 0) g = 0;
+		if (b < 0) b = 0;
+		return new Color(r, g, b);
 	}
 
 }
