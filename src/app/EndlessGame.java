@@ -84,6 +84,7 @@ public class EndlessGame extends BasicGame
 			}
 		}
 		else currentMap.move(input, delta);
+		currentMap.updateTiles(delta);
 	}
 
 	private void adjustColorChangeRate(int change) {

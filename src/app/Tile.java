@@ -27,7 +27,7 @@ public class Tile {
 	 * Create a blank (white) tile.
 	 */
 	public Tile() {
-		color = new Color(0,0,0);
+		color = new Color(200,200,200);
 	}
 
 	/**

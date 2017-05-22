@@ -12,6 +12,8 @@ import org.newdawn.slick.SlickException;
 
 public class Map {
 
+	private static final int COLOR_CHANGE_RATE = 300;
+
 	// How frequently to process movement input
 	private final int MOVE_DELAY = 20;
 	
@@ -30,6 +32,8 @@ public class Map {
 	private int visibleYEnd;
 	
 	private long lastMove = 0;
+
+	private int lastTileColorChange;
 	
 
 	public Map(int width, int height, int gridSize) throws SlickException {
@@ -68,7 +72,6 @@ public class Map {
 			for (int y = visibleYStart; y < visibleYEnd; y++) {
 				Tile tile = grid.get(x).get(y);
 				// Apply a random adjustment to the color of every tile, ever render
-				tile.adjustColor();
 				avgR += tile.getColor().getRed();
 				avgG += tile.getColor().getGreen();
 				avgB += tile.getColor().getBlue();
@@ -302,6 +305,18 @@ public class Map {
 			System.out.println("Zoom level = " + EndlessGame.zoomLevel + 
 					". Rendering range = " + visibleXStart + "," + visibleYStart + " - " + visibleXEnd + "," + visibleYEnd);
 			endlessGame.zoomLevelInFlux = true;
+		}
+	}
+	
+	public void updateTiles(int delta) {
+		lastTileColorChange += delta;
+		if (lastTileColorChange > COLOR_CHANGE_RATE) {
+			for (int x = visibleXStart; x < visibleXEnd; x++) {
+				for (int y = visibleYStart; y < visibleYEnd; y++) {
+					Tile tile = grid.get(x).get(y);
+					tile.adjustColor();
+				}
+			}
 		}
 	}
 
