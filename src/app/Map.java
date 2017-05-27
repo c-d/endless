@@ -78,6 +78,8 @@ public class Map {
 				graphics.setColor(tile.getColor());
 				graphics.fillRect(renderX * EndlessGame.zoomLevel,  renderY * EndlessGame.zoomLevel,  EndlessGame.zoomLevel,  EndlessGame.zoomLevel);
 				renderY++;
+				// After it's rendered, we clear the focus of a tile. It will be reset again before the next render if needed...
+				tile.setHasFocus(false);
 			}
 			renderX++;
 		}
@@ -86,7 +88,7 @@ public class Map {
 		avgG = avgG / tileCount;
 		avgB = avgB / tileCount;
 		int avgColor = avgR + avgG + avgB;
-		System.out.println("Average color = " + avgColor);
+		//System.out.println("Average color = " + avgColor);
 		
 		//System.out.println(renderX + "," + renderY);
 		graphics.flush();
@@ -318,6 +320,12 @@ public class Map {
 				}
 			}
 		}
+	}
+
+	public void updatePlayerLocation(int mouseX, int mouseY) {
+		int tileX = (int) mouseX / EndlessGame.zoomLevel;
+		int tileY = (int) mouseY / EndlessGame.zoomLevel;
+		grid.get(tileX).get(tileY).setHasFocus(true);
 	}
 
 }

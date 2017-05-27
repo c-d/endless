@@ -11,7 +11,20 @@ public class Tile {
 	private static Color globalColor = new Color(150, 150, 150);
 	
 	private Color color;
+	private boolean hasFocus;
 	public static int number;
+	
+	/*
+	 * Each tile knows all of it's neighbours
+	 * For a tile x, it's neighbours can be indexed at
+	 * -------
+	 * |0|1|2|
+	 * |7|x|3|
+	 * |6|5|4|
+	 * -------
+	 * e.g South-west neighbour can be found at neighbours[6]
+	 */
+	private Tile[] neighbours;
 
 	/**
 	 * Create a new tile. The color of the created tile will be randomized based on the average color of neighbouring tiles.
@@ -69,9 +82,19 @@ public class Tile {
 	}
 
 	public Color getColor() {
+		if (hasFocus) {
+			return new Color(255,255,255);
+		}
 		return color;
 	}
 	
+	public void setHasFocus(boolean hasFocus) {
+		this.hasFocus = hasFocus;
+		// Re-initialize the focused tiles color
+		if (hasFocus) 
+			color = getColor();
+	}
+
 	/**
 	 * Randomly adjust color by minor increments, with no consideration of neighbouring tiles.
 	 */

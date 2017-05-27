@@ -84,7 +84,14 @@ public class EndlessGame extends BasicGame
 			}
 		}
 		else currentMap.move(input, delta);
+		
+		processMouseInput(input, delta);
+		
 		currentMap.updateTiles(delta);
+	}
+
+	private void processMouseInput(Input input, int delta) {
+		currentMap.updatePlayerLocation(input.getMouseX(), input.getMouseY());
 	}
 
 	private void adjustColorChangeRate(int change) {
